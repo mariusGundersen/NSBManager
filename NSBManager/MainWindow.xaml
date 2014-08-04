@@ -1,0 +1,45 @@
+﻿<Window x:Class="NSBManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+    </Window.Resources>
+    <Grid>
+        <DataGrid 
+            ItemsSource="{Binding QueueList}"
+            CanUserSortColumns="True"
+            CanUserResizeColumns="False"
+            CanUserResizeRows="False"
+            SelectionMode="Single"
+            RowHeaderWidth="0"
+            AutoGenerateColumns="False"
+            IsSynchronizedWithCurrentItem="True"
+            Grid.IsSharedSizeScope="True"
+            HorizontalContentAlignment="Stretch">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Name" IsReadOnly="True" CanUserSort="True" SortMemberPath="QueueName">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding QueueName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Length" IsReadOnly="True" CanUserSort="True" SortMemberPath="QueueLength">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding QueueLength}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Purge" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Purge" Command="{Binding Path=PurgeCommand}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>
