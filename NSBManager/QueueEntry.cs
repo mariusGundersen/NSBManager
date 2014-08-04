@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Messaging;
     using System.Runtime.CompilerServices;
+    using System.Windows;
     using System.Windows.Input;
 
     public class QueueEntry : INotifyPropertyChanged
@@ -28,6 +29,8 @@
             dispatcherTimer.Tick += this.Tick;
             dispatcherTimer.Interval = TimeSpan.FromSeconds(10);
             dispatcherTimer.Start();
+
+            this.UpdateQueueLength();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -36,11 +39,19 @@
 
         public int QueueLength { get; set; }
 
+        public FontWeight IsBold
+        {
+            get
+            {
+                return this.QueueLength > 0 ? FontWeights.Bold : FontWeights.Normal;
+            }
+        }
+
         public ICommand PurgeCommand
         {
             get
             {
-                return this.purgeCommand ?? (this.purgeCommand = new RelayCommand(param => this.Purge(), param => true));
+                return this.purgeCommand ?? (this.purgeCommand = new RelayCommand(param => this.Purge(), param => this.QueueLength > 0 ));
             }
         }
 

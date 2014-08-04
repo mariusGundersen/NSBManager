@@ -1,11 +1,16 @@
 ﻿<Window x:Class="NSBManager.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        xmlns:UI="clr-namespace:NSBManager"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        d:DataContext="{d:DesignInstance Type=UI:MainWindowViewModel, IsDesignTimeCreatable=True}"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
     </Window.Resources>
     <Grid>
-        <DataGrid 
+        <DataGrid
             ItemsSource="{Binding QueueList}"
             CanUserSortColumns="True"
             CanUserResizeColumns="False"
@@ -17,24 +22,24 @@
             Grid.IsSharedSizeScope="True"
             HorizontalContentAlignment="Stretch">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Name" IsReadOnly="True" CanUserSort="True" SortMemberPath="QueueName">
+                <DataGridTemplateColumn Header="Name" IsReadOnly="True" CanUserSort="True" SortMemberPath="QueueName" CanUserReorder="False" CanUserResize="True" Width="*" MinWidth="10" MaxWidth="Infinity">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding QueueName}" />
+                            <TextBlock Text="{Binding QueueName}" FontWeight="{Binding IsBold}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Length" IsReadOnly="True" CanUserSort="True" SortMemberPath="QueueLength">
+                <DataGridTemplateColumn Header="Length" IsReadOnly="True" CanUserSort="True" SortMemberPath="QueueLength" CanUserReorder="False" CanUserResize="True" MinWidth="10" MaxWidth="Infinity">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding QueueLength}" />
+                            <TextBlock Text="{Binding QueueLength}" FontWeight="{Binding IsBold}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Purge" IsReadOnly="True">
+                <DataGridTemplateColumn Header="Purge" IsReadOnly="True" CanUserSort="False" CanUserReorder="False" CanUserResize="True" MinWidth="10" MaxWidth="Infinity">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Purge" Command="{Binding Path=PurgeCommand}" />
+                            <Button Content="Purge" Command="{Binding Path=PurgeCommand}" Margin="3,0,3,0" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
