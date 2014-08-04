@@ -1,0 +1,24 @@
+﻿namespace NSBManager
+{
+    using System.Linq;
+    using System.Messaging;
+
+    public class MessageEntry : AutoNotifyPropertyChanged
+    {
+        public MessageEntry(Message message)
+        {
+            this.Body = ReadBody(message);
+            this.Sender = message.ResponseQueue.QueueName.Split('\\').Last();
+        }
+
+        public string Body { get; set; }
+
+        public string Sender { get; set; }
+
+        private static string ReadBody(Message message)
+        {
+            var document = MsmqHelper.ConvertMessageToXMLDoc(message);
+            return document.FirstChild.FirstChild.Name;
+        }
+    }
+}

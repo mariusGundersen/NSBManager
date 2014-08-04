@@ -6,21 +6,29 @@
         xmlns:UI="clr-namespace:NSBManager"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         d:DataContext="{d:DesignInstance Type=UI:MainWindowViewModel, IsDesignTimeCreatable=True}"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="600" Width="800">
     <Window.Resources>
     </Window.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <DataGrid
+            Grid.Column="0"
             ItemsSource="{Binding QueueList}"
             CanUserSortColumns="True"
-            CanUserResizeColumns="False"
+            CanUserResizeColumns="True"
             CanUserResizeRows="False"
             SelectionMode="Single"
+            SelectionUnit="FullRow"
             RowHeaderWidth="0"
             AutoGenerateColumns="False"
             IsSynchronizedWithCurrentItem="True"
             Grid.IsSharedSizeScope="True"
-            HorizontalContentAlignment="Stretch">
+            HorizontalContentAlignment="Stretch"
+            SelectedItem="{Binding SelectedQueueEntry}">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Name" IsReadOnly="True" CanUserSort="True" SortMemberPath="QueueName" CanUserReorder="False" CanUserResize="True" Width="*" MinWidth="10" MaxWidth="Infinity">
                     <DataGridTemplateColumn.CellTemplate>
@@ -45,6 +53,54 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
+        <GridSplitter Grid.Column="1"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Stretch"
+              Background="Black" 
+              ShowsPreview="True"
+              Width="5"
+              />
+        <DataGrid 
+            Grid.Column="2" 
+            ItemsSource="{Binding SelectedQueue}"
+            CanUserSortColumns="True"
+            CanUserResizeColumns="True"
+            CanUserResizeRows="False"
+            SelectionMode="Single"
+            SelectionUnit="FullRow"
+            RowHeaderWidth="0"
+            AutoGenerateColumns="False"
+            IsSynchronizedWithCurrentItem="True"
+            Grid.IsSharedSizeScope="True"
+            HorizontalContentAlignment="Stretch">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Sender" IsReadOnly="True" CanUserSort="False" CanUserReorder="False" CanUserResize="True" Width="auto" MinWidth="10" MaxWidth="Infinity">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Sender}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Type" IsReadOnly="True" CanUserSort="False" CanUserReorder="False" CanUserResize="True" Width="auto" MinWidth="10" MaxWidth="Infinity">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Type}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Message Sent" IsReadOnly="True" CanUserSort="True" SortMemberPath="SentAt" CanUserReorder="False" CanUserResize="True" Width="auto" MinWidth="10" MaxWidth="Infinity">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding SentAt}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <TextBlock Height="auto" MinHeight="20" Text="{Binding Body}" />
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
     </Grid>
 </Window>

@@ -19,15 +19,16 @@
         {
             this.QueueName = messageQueue.QueueName.Split('\\').Last();
             this.QueueLength = 0;
+            this.QueuePath = string.Format(@"{0}\private$\{1}", Environment.MachineName, this.QueueName);
 
             this.queueCounter = new PerformanceCounter(
                 "MSMQ Queue",
                 "Messages in Queue",
-                string.Format(@"{0}\private$\{1}", Environment.MachineName, this.QueueName));
+                this.QueuePath);
 
             var dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += this.Tick;
-            dispatcherTimer.Interval = TimeSpan.FromSeconds(10);
+            dispatcherTimer.Interval = TimeSpan.FromSeconds(3);
             dispatcherTimer.Start();
 
             this.UpdateQueueLength();
@@ -38,6 +39,8 @@
         public string QueueName { get; set; }
 
         public int QueueLength { get; set; }
+
+        public string QueuePath { get; set; }
 
         public FontWeight IsBold
         {
@@ -57,7 +60,7 @@
 
         public void Purge()
         {
-            var msgQueue = new MessageQueue(string.Format(@"{0}\private$\{1}", Environment.MachineName, this.QueueName));
+            var msgQueue = new MessageQueue(this.QueuePath);
             msgQueue.Purge();
             this.UpdateQueueLength();
         }
