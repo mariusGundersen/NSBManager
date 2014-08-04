@@ -54,7 +54,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AutoRefreshListCollectionView.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="QueueEntry.cs" />
     <Compile Include="QueueList.cs" />
     <Compile Include="RelayCommand.cs" />
