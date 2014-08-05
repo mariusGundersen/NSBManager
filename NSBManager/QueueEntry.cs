@@ -83,9 +83,19 @@
         {
             var old = this.QueueLength;
             this.QueueLength = this.GetQueueLength();
-            if (this.QueueLength != old)
+            if (this.QueueLength == old)
             {
-                this.OnPropertyChanged("QueueLength");
+                return;
+            }
+
+            this.OnPropertyChanged("QueueLength");
+            if (old == 0 && this.QueueLength > 0)
+            {
+                this.OnPropertyChanged("IsBold");
+            }
+            else if (old > 0 && this.QueueLength == 0)
+            {
+                this.OnPropertyChanged("IsBold");
             }
         }
 
